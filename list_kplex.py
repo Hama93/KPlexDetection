@@ -302,7 +302,7 @@ for k in range(kmax, 1, -1):
     start_time = time.time()  # Start the timer before the operation
     print("List for k = " + str(k))
     ll = listKPlex(g, k)
-    print(ll)
+    #print(ll)
     print("Number of " + str(k) + "-plexes detected = " + str(len(ll)))
     end_time = time.time()  # End the timer after the operation
     print("Time taken for this iteration: " + str(end_time - start_time) + " seconds")

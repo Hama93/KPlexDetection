@@ -10,6 +10,7 @@ Original file is located at
 # @title Class Graph
 from collections import defaultdict
 import sys
+import time
 import copy
 class Graph:
   __nodes = dict()
@@ -282,9 +283,8 @@ def listKPlexRecursive(G, k, candidate_set, listOfMaximals, memo=None):
         #if graph.getDeg(vertex) <= len(candidate_set) - k:
         next_set = candidate_set - {vertex}
         subgraph = G.getGraphInducedBy(next_set)
-        if subgraph.hasCycle():
-          listKPlexRecursive(G, k, next_set, listOfMaximals, memo)
-  memo.add(key)
+        listKPlexRecursive(G, k, next_set, listOfMaximals, memo)
+    memo.add(key)
 
 def listKPlex(G, k):
   degeneracy_ordering = set(G.getDegeneracyOrderingWithEdgeRemoval())
@@ -293,17 +293,20 @@ def listKPlex(G, k):
   return listOfMaximals
 
 # @title Main
-File = open('karate.txt', 'r')
+File = open('example3.txt', 'r')
 Lines = File.readlines()
 g = Graph()
 g.addEdges(Lines)
 kmax = g.getMaxK()
 for k in range(kmax, 1, -1):
-  print("List for k = " + str(k))
-  ll = listKPlex(g, k)
-  print(ll)
-  print(len(ll))
-
+    start_time = time.time()  # Start the timer before the operation
+    print("List for k = " + str(k))
+    ll = listKPlex(g, k)
+    print(ll)
+    print("Number of " + str(k) + "-plexes detected = " + str(len(ll)))
+    end_time = time.time()  # End the timer after the operation
+    print("Time taken for this iteration: " + str(end_time - start_time) + " seconds")
+File.close()
 # @title Threaded
 """from multiprocessing import Pool
 
